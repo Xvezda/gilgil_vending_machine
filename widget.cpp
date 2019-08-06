@@ -30,39 +30,9 @@ Widget::~Widget()
 
 void Widget::updateButtons(void)
 {
-    if (money < COFFEE) {  // If money not enough for all items
-        disableAllButtons();  // Disable all buttons
-    } else if (COFFEE <= money && money < TEA) {
-        enableButton(ui->pbCoffee);
-        disableButton(ui->pbTea);
-        disableButton(ui->pbCoke);
-    } else if (TEA <= money && money < COKE) {
-        enableButton(ui->pbCoffee);
-        enableButton(ui->pbTea);
-        disableButton(ui->pbCoke);
-    } else {
-        enableButton(ui->pbCoffee);
-        enableButton(ui->pbTea);
-        enableButton(ui->pbCoke);
-    }
-}
-
-void Widget::disableAllButtons(void)
-{
-    for (std::vector<QPushButton*>::iterator it = buttons.begin();
-         it != buttons.end(); it++) {
-        disableButton(*it);
-    }
-}
-
-void Widget::disableButton(QPushButton* button)
-{
-    button->setEnabled(false);
-}
-
-void Widget::enableButton(QPushButton* button)
-{
-    button->setEnabled(true);
+    ui->pbCoffee->setEnabled(money >= COFFEE);
+    ui->pbTea->setEnabled(money >= TEA);
+    ui->pbCoke->setEnabled(money >= COKE);
 }
 
 void Widget::setMoney(int n)
@@ -97,9 +67,6 @@ void Widget::changeMoney(int n)
 void Widget::on_pb10_clicked()
 {
     changeMoney(10);
-    ui->pbCoke->setEnabled(false);
-    QMessageBox msg;
-    msg.information(nullptr, QString("Error"), QString("XXX"));
 }
 
 void Widget::on_pb50_clicked()
@@ -130,4 +97,30 @@ void Widget::on_pbTea_clicked()
 void Widget::on_pbCoke_clicked()
 {
     changeMoney(-COKE);
+}
+
+void Widget::on_pbReset_clicked()
+{
+    int money_500 = (!getMoney()) ? 0 : getMoney() / 500;
+    changeMoney(money_500*500*-1);
+    int money_100 = (!getMoney()) ? 0 : getMoney() / 100;
+    changeMoney(money_100*100*-1);
+    int money_50 = (!getMoney()) ? 0 : getMoney() / 50;
+    changeMoney(money_50*50*-1);
+    int money_10 = (!getMoney()) ? 0 : getMoney() / 10;
+    changeMoney(money_10*10*-1);
+
+    QMessageBox msg;
+    msg.information(nullptr,
+        QString("Result"),
+        QString("500 won: %1\n"
+                "100 won: %2\n"
+                " 50 won: %3\n"
+                " 10 won: %4\n")
+                    .arg(money_500)
+                    .arg(money_100)
+                    .arg(money_50)
+                    .arg(money_10));
+
+    setMoney(0);
 }

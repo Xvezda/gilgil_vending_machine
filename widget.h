@@ -22,10 +22,6 @@ public:
     void displayMoney(void);
     void setMoney(int n);
     int getMoney(void);
-
-    void disableAllButtons(void);
-    void enableButton(QPushButton* button);
-    void disableButton(QPushButton* button);
     void updateButtons(void);
 
 private slots:
@@ -42,6 +38,8 @@ private slots:
     void on_pbTea_clicked();
 
     void on_pbCoke_clicked();
+
+    void on_pbReset_clicked();
 
 private:
     Ui::Widget *ui;

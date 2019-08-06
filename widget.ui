@@ -114,6 +114,19 @@
     <string>coke (200)</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="pbReset">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>250</y>
+     <width>96</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Reset</string>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
